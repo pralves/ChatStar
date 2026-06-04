@@ -18,8 +18,9 @@ class ApiController < ApplicationController
   end
 
   def postgres_status
-    ActiveRecord::Base.connection.active? ? 'ok' : 'failing'
-  rescue ActiveRecord::ConnectionNotEstablished
+    ActiveRecord::Base.connection_pool.with_connection { |connection| connection.select_value('SELECT 1') }
+    'ok'
+  rescue ActiveRecord::ActiveRecordError
     'failing'
   end
 end

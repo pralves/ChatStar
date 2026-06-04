@@ -45,9 +45,8 @@ jobs:
             else
               echo "Waiting for review app to be ready, retrying in  3 minutes..."
               sleep 180
-              attempt=$((attempt +  1))
             fi
+            attempt=$((attempt + 1))
           done
           echo "Deployment failed after $max_attempts attempts"
-          exit  1
-          fi
+          exit 1

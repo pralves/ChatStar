@@ -1,0 +1,3 @@
+FROM chatwoot/chatwoot:latest
+
+COPY app/controllers/api_controller.rb /app/app/controllers/api_controller.rb
