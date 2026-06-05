@@ -15,21 +15,21 @@ A chat.eletrostarsoft.com.br -> 187.77.245.58
 ```bash
 git clone https://github.com/pralves/ChatStar.git /opt/chatstar
 cd /opt/chatstar
-git checkout develop
+git checkout main
 
-cp deployment/hostinger/.env.example deployment/hostinger/.env
-nano deployment/hostinger/.env
+cp .env.docker.example .env
+nano .env
 
-docker compose -f deployment/hostinger/docker-compose.yaml --env-file deployment/hostinger/.env build
-docker compose -f deployment/hostinger/docker-compose.yaml --env-file deployment/hostinger/.env up -d postgres redis
-docker compose -f deployment/hostinger/docker-compose.yaml --env-file deployment/hostinger/.env run --rm prepare
-docker compose -f deployment/hostinger/docker-compose.yaml --env-file deployment/hostinger/.env up -d rails sidekiq caddy
+docker compose build
+docker compose up -d postgres redis
+docker compose run --rm prepare
+docker compose up -d rails sidekiq caddy
 ```
 
 ## Validate
 
 ```bash
-docker compose -f deployment/hostinger/docker-compose.yaml --env-file deployment/hostinger/.env ps
+docker compose ps
 curl -fsS https://chat.eletrostarsoft.com.br/api
 ```
 
@@ -48,7 +48,7 @@ Host: 127.0.0.1
 Port: 5432
 Database: chatwoot
 User: postgres
-Password: POSTGRES_PASSWORD from deployment/hostinger/.env
+Password: POSTGRES_PASSWORD from .env
 ```
 
 From another machine, use an SSH tunnel instead of opening port `5432` publicly.
